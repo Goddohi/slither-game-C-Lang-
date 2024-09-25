@@ -24,7 +24,7 @@ void init(int ScrWidth,int ScrHeight) {
 
 
 void setColor(int color) {
-   // text color change 
+   // 텍스트 색상 변경
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (info.wAttributes&0xf0) | (color &0xf));
@@ -38,7 +38,7 @@ void gotoxy(int x,int y) {
    SetConsoleCursorPosition(consoleHandle,pos);
 }
 //커서삭제 
-void noCursor() {   // No Cursor
+void noCursor() {   
     CONSOLE_CURSOR_INFO CurInfo;
     CurInfo.dwSize=1;
     CurInfo.bVisible=FALSE;
@@ -60,11 +60,11 @@ void consoleCls() {
     scrollTarget.X = 0;
     scrollTarget.Y = (SHORT)(0 - csbi.dwSize.Y);
 
-    // Fill with empty spaces with the buffer's default text attribute.
+    //버퍼의 기본 텍스트 속성으로 빈 공간을 채움
     fill.Char.UnicodeChar = TEXT(' ');
     fill.Attributes = csbi.wAttributes;
 
-    // Do the scroll
+    // 스크롤 함
     ScrollConsoleScreenBuffer(hConsole, &scrollRect, NULL, scrollTarget, &fill);   
 }
 
@@ -209,7 +209,7 @@ main() {
     			draw(arrx[k],arry[k], GREEN);
 			}
 		}
-    	draw(x, y, GREEN); // 새로운 위치에 객체를 그립니다.
+    	draw(x, y, GREEN); // 새로운 위치에 객체 그림
 		draw(numx, numy, YELLOW);//먹어야하는 별 
 		timer++;//시간 
     	renderScreen();
