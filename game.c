@@ -111,6 +111,20 @@ int randomnumH(){
 }
 
 
+//꼬리 충돌  
+int checkCollision(int x, int y, int arrx[], int arry[], int key) {
+	int i;
+    for (i = 1; i < key; i++) { // i = 1 인 이유는 자기 자신(선두)는 제
+        if (arrx[i] == x && arry[i] == y) {
+            return 1; // 충돌 발생
+        }
+    }
+    return 0;
+}
+
+
+
+
 main() {	
    int x=15,k,y=15,key;
    int moveVecter=1/*움직이는 방향*/,timer=0,gamelevel; 
@@ -145,7 +159,7 @@ main() {
     	
 		if (GetAsyncKeyState(VK_UP) & 0x8000) { // 위쪽 화살표 키를 누르면
         	if (y > 0){ 
-				moveVecter=3;; // y 값을 감소시켜서 위쪽으로 이동
+				moveVecter=3; // y 값을 감소시켜서 위쪽으로 이동
     		}
     	}
     	if (GetAsyncKeyState(VK_DOWN) & 0x8000) { // 아래쪽 화살표 키를 누르면
@@ -206,17 +220,25 @@ main() {
 					arrx[k]=arrx[k-1];
 					arry[k]=arry[k-1];
 				}
-    			draw(arrx[k],arry[k], GREEN);
+    			draw(arrx[k],arry[k], GREEN); // 꼬리 따라오는거 그리기  
 			}
 		}
+		
+
+		
     	draw(x, y, GREEN); // 새로운 위치에 객체 그림
 		draw(numx, numy, YELLOW);//먹어야하는 별 
 		timer++;//시간 
     	renderScreen();
     	Sleep(20);
     	if(gamelevel==1){
-    	Sleep(80);//80ms딜레이 
+    		Sleep(80);//80ms딜레이 
 		} 
+		if (checkCollision(x, y, arrx, arry, key)) { //1은 true  0은 false 
+            printf("자신의 꼬리에 닿았습니다! 게임 종료\n");
+            keep = 0;
+        }
+
 	}
    printf("시간초과\n");
    printf("점수 = %d \n",key);
